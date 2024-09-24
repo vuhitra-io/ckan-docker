@@ -12,6 +12,7 @@ services:
     build:
       context: nginx/
       dockerfile: Dockerfile
+    restart: unless-stopped
     depends_on:
       ckan-dev:
         condition: service_healthy
