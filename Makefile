@@ -10,11 +10,9 @@ down:
 	docker compose -f docker-compose.dev.yml down -v
 
 install:
-	docker cp ./ckan/extensions/* ckan-dev:/srv/app/src_extensions
+	@echo "Installing extensions..."
+	./copy_extensions.sh
 	docker compose exec ckan-dev /usr/local/bin/install-extensions.sh
-
-update:
-    docker cp ./ckan/extensions/* ckan-dev:/srv/app/src_extensions
 
 all: build install
 
