@@ -26,4 +26,4 @@ build-all:
 	@echo "build-all target not implemented"
 
 push:
-	@echo "push target not implemented"
+	git push
