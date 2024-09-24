@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Set the APP_DIR if it's not already set
-APP_DIR=${APP_DIR:-/srv/app}
+# Set the SRC_DIR to the mounted src_extensions directory
+SRC_DIR="/srv/app/src_extensions"
 
 # Function to install an extension
 install_extension() {
@@ -23,7 +23,7 @@ install_extension() {
 # Check if a specific extension name was provided
 if [ $# -eq 1 ]; then
     ext_name="$1"
-    ext_path="${APP_DIR}/src/${ext_name}"
+    ext_path="${SRC_DIR}/${ext_name}"
     if [ -d "$ext_path" ]; then
         install_extension "$ext_path"
     else
@@ -31,8 +31,8 @@ if [ $# -eq 1 ]; then
         exit 1
     fi
 else
-    # Install all extensions in the src directory
-    for d in ${APP_DIR}/src/ckanext-*; do
+    # Install all extensions in the src_extensions directory
+    for d in ${SRC_DIR}/ckanext-*; do
         if [ -d "$d" ]; then
             install_extension "$d"
         fi
