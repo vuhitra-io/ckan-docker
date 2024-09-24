@@ -9,6 +9,7 @@ volumes:
 services:
 
   ckan-dev:
+    container_name: ckan-dev
     build:
       context: ckan/
       dockerfile: Dockerfile.dev
