@@ -44,7 +44,7 @@ services:
       - ./install-extensions.sh:/usr/local/bin/install-extensions.sh
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://0.0.0.0:5000"]
 
   datapusher:
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
