@@ -34,6 +34,9 @@ FROM ckan/ckan-dev:2.10.4
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 
+# Copy custom extensions
+COPY extensions/* /srv/app/src_extensions/
+
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
