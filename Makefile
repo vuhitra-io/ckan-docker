@@ -13,6 +13,9 @@ install:
 	docker cp ./ckan/extensions/* ckan-dev:/srv/app/src_extensions
 	docker compose exec ckan-dev /usr/local/bin/install-extensions.sh
 
+update:
+    docker cp ./ckan/extensions/* ckan-dev:/srv/app/src_extensions
+
 all: build install
 
 help:
