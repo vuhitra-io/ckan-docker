@@ -1,0 +1,3 @@
+[submodule "ckan/extensions/ckanext-vuhitra-ext"]
+	path = ckan/extensions/ckanext-vuhitra-ext
+	url = git@github.com:vuhitra-io/ckanext-vuhitra-ext.git
