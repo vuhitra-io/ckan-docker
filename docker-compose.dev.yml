@@ -28,6 +28,7 @@ services:
       - pip_cache:/root/.cache/pip
       - site_packages:/usr/lib/python3.10/site-packages
       - vscode_server:/root/.vscode-server
+      - ./install-extensions.sh:/usr/local/bin/install-extensions.sh
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
