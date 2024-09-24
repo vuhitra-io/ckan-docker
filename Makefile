@@ -9,6 +9,9 @@ build:
 down:
 	docker compose -f docker-compose.dev.yml down -v
 
+down-v:
+	docker compose -f docker-compose.dev.yml down
+
 install:
 	@echo "Installing extensions..."
 	./copy_extensions.sh
