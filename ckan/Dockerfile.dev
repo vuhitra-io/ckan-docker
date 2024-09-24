@@ -7,9 +7,6 @@ RUN apk update && apk add --no-cache inotify-tools supervisor rsync
 COPY watch_sync.sh /root/watch_sync.sh
 RUN chmod +x /root/watch_sync.sh
 
-# Copy custom extensions
-COPY extensions/* /srv/app/src_extensions/
-
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
