@@ -39,6 +39,7 @@ services:
       - site_packages:/usr/lib/python3.10/site-packages
       - vscode_server:/root/.vscode-server
       - ./install-extensions.sh:/usr/local/bin/install-extensions.sh
+      - ./ckan_plugins.txt:/root/ckan_plugins.txt
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://0.0.0.0:5000"]
