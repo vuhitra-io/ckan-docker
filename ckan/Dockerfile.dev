@@ -6,6 +6,7 @@ RUN npm install -g webpack webpack-cli
 
 # Copy your inotify script into the container
 COPY watch_sync.sh /root/watch_sync.sh
+COPY ckan_plugins.txt /root/ckan_plugins.txt
 RUN chmod +x /root/watch_sync.sh
 
 # Copy custom initialization scripts
