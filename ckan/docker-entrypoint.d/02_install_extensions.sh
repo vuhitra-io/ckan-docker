@@ -28,5 +28,6 @@ for d in ${SRC_DIR}/ckanext-*; do
     fi
 done
 
+chown -R root:root /srv/app/src_extensions/
 
 echo "Extension installation complete"
