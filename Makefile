@@ -4,20 +4,23 @@ SHELL := /bin/bash
 
 build:
 	docker compose -f docker-compose.dev.yml build
+
+compose:
 	docker compose -f docker-compose.dev.yml up -d
 
 down:
-	docker compose -f docker-compose.dev.yml down -v
-
-down-v:
 	docker compose -f docker-compose.dev.yml down
+
+destroy:
+	docker compose -f docker-compose.dev.yml down -v
 
 install:
 	@echo "Installing extensions..."
 	./copy_extensions.sh
 	docker compose exec ckan-dev /usr/local/bin/install-extensions.sh
 
-all: build install
+all: build compose install
+run: compose install
 
 help:
 	@echo "Available targets:"
