@@ -20,14 +20,11 @@ install_extension() {
     fi
 }
 
-
 # Install all extensions in the src_extensions directory
 for d in ${SRC_DIR}/ckanext-*; do
     if [ -d "$d" ]; then
         install_extension "$d"
     fi
 done
-
-chown -R root:root /srv/app/src_extensions/
 
 echo "Extension installation complete"

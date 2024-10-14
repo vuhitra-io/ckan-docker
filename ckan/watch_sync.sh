@@ -5,4 +5,5 @@ while true; do
   inotifywait -r -e modify,create,delete,move /root/extensions
   # Sync changes to /srv/app/src_extensions
   rsync -av --delete /root/extensions/ /srv/app/src_extensions/
+  chown -R root:root /srv/app/src_extensions/
 done
