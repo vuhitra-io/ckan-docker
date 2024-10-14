@@ -1,6 +1,0 @@
-[submodule "ckan/extensions/ckanext-vuhitra-ext"]
-	path = ckan/extensions/ckanext-vuhitra-ext
-	url = git@github.com:vuhitra-io/ckanext-vuhitra-ext.git
-[submodule "ckan/extensions/ckanext-text-processor"]
-	path = ckan/extensions/ckanext-text-processor
-	url = git@github.com:vuhitra-io/ckanext-text-processor.git
