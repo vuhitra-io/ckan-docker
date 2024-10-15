@@ -16,15 +16,10 @@ re: up down
 destroy:
 	docker compose -f docker-compose.dev.yml down -v
 
-install:
-	@echo "Installing extensions..."
-	./copy_extensions.sh
-	docker compose exec ckan-dev /usr/local/bin/install-extensions.sh
-
 all: destroy build up
 rebuild: build up
 restart: down up
-run: compose install
+run: compose
 
 help:
 	@echo "Available targets:"
