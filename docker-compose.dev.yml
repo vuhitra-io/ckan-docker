@@ -37,8 +37,6 @@ services:
       - ./src:/srv/app/src_extensions
       - pip_cache:/root/.cache/pip
       - site_packages:/usr/lib/python3.10/site-packages
-      - vscode_server:/root/.vscode-server
-      - ./install-extensions.sh:/usr/local/bin/install-extensions.sh
       - ./global-req.txt:/root/requirements.txt
       - ./init-commands.txt:/root/commands.txt
     restart: unless-stopped
