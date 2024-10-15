@@ -23,6 +23,7 @@ install:
 
 all: destroy build up
 rebuild: build up
+restart: down up
 run: compose install
 
 help:

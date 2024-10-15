@@ -25,6 +25,7 @@ services:
         - TZ=${TZ}
     env_file:
       - .env
+      - __project_env__
     links:
       - db
       - solr
