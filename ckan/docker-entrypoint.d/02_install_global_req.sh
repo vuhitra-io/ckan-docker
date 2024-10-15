@@ -21,6 +21,11 @@ check_installation() {
 
 # Main execution
 main() {
+    find "$SRC_EXTENSIONS_DIR"/ -type f \( \
+        -name '*requirements*.txt' -o \
+        -name '*requirements*.in' -o \
+        -name '*requirements.py[23].txt' \
+    \) -delete
     install_requirements
     check_installation
 }
