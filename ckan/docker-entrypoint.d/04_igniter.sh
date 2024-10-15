@@ -1,7 +1,5 @@
 #!/bin/bash
 
-COMMAND_FILE="/root/commands.txt"
-
 # Check if the file exists
 if [ ! -f "$COMMAND_FILE" ]; then
     echo "Error: File '$COMMAND_FILE' not found."

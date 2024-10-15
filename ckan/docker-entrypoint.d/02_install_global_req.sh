@@ -6,7 +6,7 @@ set -e
 # Function to install requirements
 install_requirements() {
     echo "Installing requirements..."
-    pip install -r /root/requirements.txt
+    pip install -r $REQUIREMENTS_FILE
 }
 
 # Function to check for errors and provide feedback
