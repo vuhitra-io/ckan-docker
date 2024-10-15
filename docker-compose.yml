@@ -21,6 +21,7 @@ services:
       - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
     
   ckan:
+    container_name: ckan-dev
     build:
       context: ckan/
       dockerfile: Dockerfile
@@ -33,20 +34,26 @@ services:
       - redisnet
     env_file:
       - .env
-    depends_on:
-      db:
-        condition: service_healthy
-      solr:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - __project_env__
+    links:
+      - db
+      - solr
+      - redis
+    ports:
+      - "0.0.0.0:${CKAN_PORT_HOST}:5000"
     volumes:
       - ckan_storage:/var/lib/ckan
+      - ./ckan/extensions:/root/extensions
+      - ./src:/srv/app/src_extensions
       - pip_cache:/root/.cache/pip
       - site_packages:/usr/lib/python3.10/site-packages
+      - vscode_server:/root/.vscode-server
+      - ./__requirements__.txt:/root/requirements.txt
+      - ./__commands__.txt:/root/commands.txt
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
+
     
   datapusher:
     networks:
