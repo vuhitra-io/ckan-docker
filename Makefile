@@ -5,7 +5,7 @@ SHELL := /bin/bash
 build:
 	docker compose -f docker-compose.dev.yml build
 
-compose:
+up:
 	docker compose -f docker-compose.dev.yml up -d
 
 down:
