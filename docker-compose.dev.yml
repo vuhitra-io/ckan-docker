@@ -39,6 +39,8 @@ services:
       - site_packages:/usr/lib/python3.10/site-packages
       - vscode_server:/root/.vscode-server
       - ./install-extensions.sh:/usr/local/bin/install-extensions.sh
+      - ./global-req.txt:/root/requirements.txt
+      - ./init-commands.txt:/root/commands.txt
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://0.0.0.0:5000"]

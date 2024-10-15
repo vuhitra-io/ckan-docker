@@ -21,7 +21,8 @@ install:
 	./copy_extensions.sh
 	docker compose exec ckan-dev /usr/local/bin/install-extensions.sh
 
-all: build compose install
+all: destroy build up
+rebuild: build up
 run: compose install
 
 help:
