@@ -17,7 +17,6 @@ destroy:
 all: destroy build up
 rebuild: build up
 restart: down up
-run: compose
 
 help:
 	@echo "Available targets:"
