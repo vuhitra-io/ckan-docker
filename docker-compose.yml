@@ -47,7 +47,6 @@ services:
       - ./src:/srv/app/src_extensions
       - pip_cache:/root/.cache/pip
       - site_packages:/usr/lib/python3.10/site-packages
-      - vscode_server:/root/.vscode-server
       - ./__requirements__.txt:/root/requirements.txt
       - ./__commands__.txt:/root/commands.txt
     restart: unless-stopped
