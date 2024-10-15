@@ -11,8 +11,6 @@ up:
 down:
 	docker compose -f docker-compose.dev.yml down
 
-re: up down
-
 destroy:
 	docker compose -f docker-compose.dev.yml down -v
 
