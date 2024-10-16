@@ -10,4 +10,3 @@ if [[ $CKAN__PLUGINS == *"datapusher"* ]]; then
 else
    echo "Not configuring DataPusher"
 fi
-
