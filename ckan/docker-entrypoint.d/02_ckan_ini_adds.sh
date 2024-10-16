@@ -10,6 +10,7 @@ fi
 # Read each line from the file and add it to ckan.ini if it doesn't exist
 while IFS= read -r line
 do
+    echo -e "\n" >> "$CKAN_INI"
     if ! grep -qF "$line" "$CKAN_INI"; then
         echo "$line" >> "$CKAN_INI"
         echo "Added: $line"
