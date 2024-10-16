@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Exit immediately if a command exits with a non-zero status.
-set -e
 
 # Function to install requirements
 install_requirements() {
