@@ -56,6 +56,10 @@ else
     echo "Token created: $TOKEN_VALUE"
 fi
 
+echo "Creating API token..."
+TOKEN_VALUE=$(run_in_container "ckan -c \$CKAN_INI user token add '$USER_NAME' '$TOKEN_NAME' | tail -n 1 | tr -d '[:space:]'")
+echo "Token created: $TOKEN_VALUE"
+
 # Function to make API calls
 make_api_call() {
     local endpoint="$1"
@@ -69,30 +73,12 @@ make_api_call() {
 
 # Create the organization
 echo "Creating organization..."
-org_data="{\"name\":\"$ORG_BASE_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
+org_data="{\"name\":\"$ORG_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
 response=$(make_api_call "organization_create" "POST" "$org_data")
 echo "$response"
 if echo "$response" | grep -q '"success": true'; then
     echo "Organization created successfully."
 fi
-## Verify the organization was created
-#echo "Verifying organization..."
-#response=$(make_api_call "organization_show" "POST" "{\"id\":\"$ORG_ID\"}")
-#echo "$response"
-#if echo "$response" | grep -q '"success": true'; then
-#    echo "Organization verified successfully."
-#else
-#    echo "Failed to verify organization."
-#fi
 
-## Show user details (including API token)
-#echo "Showing user details (including API token)..."
-#response=$(make_api_call "user_show" "POST" "{\"id\":\"$USER_NAME\"}")
-#echo "$response"
-#if echo "$response" | grep -q '"success": true'; then
-#    echo "User details retrieved successfully."
-#else
-#    echo "Failed to retrieve user details."
-#fi
-#
-#echo "Initialization complete."
+
+echo "Initialization complete."
