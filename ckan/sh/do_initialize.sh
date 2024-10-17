@@ -10,7 +10,6 @@ USER_EMAIL="admin@vuhitra.io"
 TOKEN_NAME="default-token"
 TOKEN_VALUE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyeC1lUHhvXzNrdVgxQlE4Nzlsb3lWOTRYSTZhT2o1OGVKSHBNQnppN0dzIiwiaWF0IjoxNzI5MTUyNzQzfQ.SNQ-E2YHZvUMEpt1LkNbRJfLI8L0WRn7q4XEGeGu1OU"
 
-
 # Generate a random suffix (6 alphanumeric characters)
 RANDOM_SUFFIX=$(LC_ALL=C tr -dc 'a-z0-9' < /dev/urandom | head -c 6)
 
@@ -35,7 +34,6 @@ else
     echo "Note: Admin user might already exist. Proceeding with the script."
 fi
 
-
 # Function to check if token exists
 check_token_exists() {
     local token_check=$(run_in_container "ckan -c \$CKAN_INI user token list '$USER_NAME' | grep '$TOKEN_NAME'")
@@ -57,10 +55,6 @@ else
     echo "Token created: $TOKEN_VALUE"
 fi
 
-echo "Creating API token..."
-TOKEN_VALUE=$(run_in_container "ckan -c \$CKAN_INI user token add '$USER_NAME' '$TOKEN_NAME' | tail -n 1 | tr -d '[:space:]'")
-echo "Token created: $TOKEN_VALUE"
-
 # Function to make API calls
 make_api_call() {
     local endpoint="$1"
@@ -72,14 +66,35 @@ make_api_call() {
         -d '$data'"
 }
 
-# Create the organization
-echo "Creating organization..."
-org_data="{\"name\":\"$ORG_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
-response=$(make_api_call "organization_create" "POST" "$org_data")
-echo "$response"
-if echo "$response" | grep -q '"success": true'; then
-    echo "Organization created successfully."
-fi
+# Function to create organization with retry
+create_organization() {
+    echo "Creating organization..."
+    org_data="{\"name\":\"$ORG_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
+    response=$(make_api_call "organization_create" "POST" "$org_data")
+    echo "$response"
+    if echo "$response" | grep -q '"success": true'; then
+        echo "Organization created successfully."
+        return 0
+    elif echo "$response" | grep -q "Internal Server Error"; then
+        echo "Internal Server Error occurred. Attempting to fix permissions..."
+        run_in_container "chown -R ckan:ckan /var/lib/ckan/storage"
+        echo "Permissions updated. Retrying organization creation..."
+        response=$(make_api_call "organization_create" "POST" "$org_data")
+        echo "$response"
+        if echo "$response" | grep -q '"success": true'; then
+            echo "Organization created successfully after fixing permissions."
+            return 0
+        else
+            echo "Failed to create organization even after fixing permissions."
+            return 1
+        fi
+    else
+        echo "Failed to create organization."
+        return 1
+    fi
+}
 
+# Attempt to create the organization
+create_organization
 
 echo "Initialization complete."
