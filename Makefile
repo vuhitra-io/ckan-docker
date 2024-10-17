@@ -1,6 +1,7 @@
-.PHONY: all help build build-all push install
+.PHONY: all help build build-all push install demo
 
 SHELL := /bin/bash
+DEMO_SCRIPT_PATH := ./ckan/sh/do_initialize.sh
 
 build:
 	docker compose -f docker-compose.dev.yml build
@@ -23,10 +24,19 @@ auto-sync:
 ignite:
 	docker exec -ti ckan-dev /root/do_ignite.sh
 
+demo:
+	@echo "Running initialization script..."
+	@if [ -f $(DEMO_SCRIPT_PATH) ]; then \
+		bash $(DEMO_SCRIPT_PATH); \
+	else \
+		echo "Error: Script not found at $(SCRIPT_PATH)"; \
+		exit 1; \
+	fi
+
 pre-start: sync ignite
 all: destroy build up pre-start auto-sync
 rebuild: build up
-restart: down up pre-start auto-sync
+restart: down up ignite auto-sync
 
 help:
 	@echo "Available targets:"
