@@ -18,15 +18,15 @@ sync:
 	docker exec -ti ckan-dev /root/do_sync.sh
 
 auto-sync:
-	docker exec -ti ckan-dev sh -c "/root/watch_sync.sh &"
+	docker exec -d ckan-dev /root/watch_sync.sh
 
 ignite:
 	docker exec -ti ckan-dev /root/do_ignite.sh
 
 pre-start: sync ignite
-all: destroy build up pre-start
+all: destroy build up pre-start auto-sync
 rebuild: build up
-restart: down up pre-start
+restart: down up pre-start auto-sync
 
 help:
 	@echo "Available targets:"
