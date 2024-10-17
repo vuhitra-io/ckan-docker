@@ -49,7 +49,7 @@ jobs:
 
     - name: Verify API token creation
       run: |
-        token_exists=$(docker exec -i ckan-dev ckan -c $CKAN_INI user token list admin | grep default-token)
+        token_exists=$(docker exec -i ckan-dev ckan user token list admin | grep default-token)
         if [ -n "$token_exists" ]; then
           echo "API token created successfully."
         else
