@@ -27,17 +27,42 @@ jobs:
       run: |
         make create
 
-    - name: Run ignite script
-      run: |
-        make ignite
-
     - name: Test CKAN
       run: |
         response=$(curl -sS -o /dev/null -w "%{http_code}" http://localhost:5000)
         if [ $response == "200" ]; then
           echo "CKAN is accessible. Test passed!"
-          exit 0
         else
           echo "Failed to access CKAN. HTTP status code: $response"
+          exit 1
+        fi
+
+    - name: Verify admin user creation
+      run: |
+        user_exists=$(docker exec -i ckan-dev ckan user list | grep admin)
+        if [ -n "$user_exists" ]; then
+          echo "Admin user created successfully."
+        else
+          echo "Failed to create admin user."
+          exit 1
+        fi
+
+    - name: Verify API token creation
+      run: |
+        token_exists=$(docker exec -i ckan-dev ckan -c $CKAN_INI user token list admin | grep default-token)
+        if [ -n "$token_exists" ]; then
+          echo "API token created successfully."
+        else
+          echo "Failed to create API token."
+          exit 1
+        fi
+
+    - name: Verify organization creation
+      run: |
+        org_exists=$(docker exec -i ckan-dev ckan organization list | grep vuhitra-io)
+        if [ -n "$org_exists" ]; then
+          echo "Organization created successfully."
+        else
+          echo "Failed to create organization."
           exit 1
         fi
