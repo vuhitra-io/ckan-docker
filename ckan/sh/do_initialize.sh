@@ -67,46 +67,32 @@ make_api_call() {
         -d '$data'"
 }
 
-
-# Function to check if organization exists
-check_organization_exists() {
-    local org_check=$(make_api_call "organization_list" "POST" "{\"all_fields\": true}")
-    if echo "$org_check" | jq -e ".result[] | select(.title == \"$ORG_NAME\")" > /dev/null; then
-        echo "Organization '$ORG_NAME' already exists"
-        ORG_ID=$(echo "$org_check" | jq -r ".result[] | select(.title == \"$ORG_NAME\") | .id")
-        return 0
-    else
-        return 1
-    fi
-}
-
 # Create the organization
 echo "Creating organization..."
-org_data="{\"name\":\"$ORG_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
+org_data="{\"name\":\"$ORG_BASE_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
 response=$(make_api_call "organization_create" "POST" "$org_data")
 echo "$response"
 if echo "$response" | grep -q '"success": true'; then
     echo "Organization created successfully."
 fi
+## Verify the organization was created
+#echo "Verifying organization..."
+#response=$(make_api_call "organization_show" "POST" "{\"id\":\"$ORG_ID\"}")
+#echo "$response"
+#if echo "$response" | grep -q '"success": true'; then
+#    echo "Organization verified successfully."
+#else
+#    echo "Failed to verify organization."
+#fi
 
-# Verify the organization was created
-echo "Verifying organization..."
-response=$(make_api_call "organization_show" "POST" "{\"id\":\"$ORG_ID\"}")
-echo "$response"
-if echo "$response" | grep -q '"success": true'; then
-    echo "Organization verified successfully."
-else
-    echo "Failed to verify organization."
-fi
-
-# Show user details (including API token)
-echo "Showing user details (including API token)..."
-response=$(make_api_call "user_show" "POST" "{\"id\":\"$USER_NAME\"}")
-echo "$response"
-if echo "$response" | grep -q '"success": true'; then
-    echo "User details retrieved successfully."
-else
-    echo "Failed to retrieve user details."
-fi
-
-echo "Initialization complete."
+## Show user details (including API token)
+#echo "Showing user details (including API token)..."
+#response=$(make_api_call "user_show" "POST" "{\"id\":\"$USER_NAME\"}")
+#echo "$response"
+#if echo "$response" | grep -q '"success": true'; then
+#    echo "User details retrieved successfully."
+#else
+#    echo "Failed to retrieve user details."
+#fi
+#
+#echo "Initialization complete."
