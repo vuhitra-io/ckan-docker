@@ -1,4 +1,4 @@
-[![CKAN Docker Stack Test](https://github.com/vht-io/ckan-docker/actions/workflows/test.yml/badge.svg)](https://github.com/vht-io/ckan-docker/actions/workflows/test.yml)
+[![CKAN Docker Stack Test](https://github.com/vuhitra-io/ckan-docker/actions/workflows/test.yml/badge.svg)](https://github.com/vuhitra-io/ckan-docker/actions/workflows/test.yml)
 
 # My personal stack for quick work
 
