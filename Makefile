@@ -1,4 +1,4 @@
-.PHONY: all help build build-all push install demo
+.PHONY: all help build build-all push install demo purge reset
 
 SHELL := /bin/bash
 DEMO_SCRIPT_PATH := ./ckan/sh/do_initialize.sh
@@ -34,7 +34,9 @@ demo:
 	fi
 
 pre-start: sync ignite
-all: destroy build up pre-start auto-sync
+purge: destroy build up ignite auto-sync
+reset: destroy up ignite auto-sync
+all: down build up ignite auto-sync
 rebuild: build up
 restart: down up ignite auto-sync
 

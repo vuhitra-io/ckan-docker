@@ -15,9 +15,6 @@ services:
     restart: unless-stopped
     ports:
       - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
-    depends_on:
-      ckan-dev:
-        condition: service_healthy
 
   ckan-dev:
     container_name: ckan-dev
@@ -46,9 +43,6 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://0.0.0.0:5000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   datapusher:
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
