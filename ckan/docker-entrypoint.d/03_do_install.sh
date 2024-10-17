@@ -66,6 +66,9 @@ main() {
             install_extension "$d"
         fi
     done
+
+    # init database
+    ckan --config $CKAN_INI db init
 }
 
 # Run the main function
