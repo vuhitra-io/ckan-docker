@@ -14,3 +14,5 @@ First clone [ckan-docker-base](https://github.com/vuhitra-io/ckan-docker-base),
 Then CD to ckan-docker;
 - make purge (to create from scratch)
 - make rebuild (or)
+
+To include extensions, add them as submodule in ckan/extensions or clone them in it.
