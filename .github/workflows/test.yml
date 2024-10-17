@@ -59,8 +59,9 @@ jobs:
 
     - name: Verify organization creation
       run: |
-        org_exists=$(docker exec -i ckan-dev ckan organization list | grep vuhitra-io)
-        if [ -n "$org_exists" ]; then
+        token=$(docker exec -i ckan-dev ckan user token add admin default-token | tail -n 1 | tr -d '[:space:]')
+        response=$(curl -s -H "Authorization: $token" http://localhost:5000/api/3/action/organization_list)
+        if echo "$response" | grep -q "vuhitra-io"; then
           echo "Organization created successfully."
         else
           echo "Failed to create organization."
