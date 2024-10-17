@@ -19,14 +19,17 @@ jobs:
     - name: Install make
       run: sudo apt-get update && sudo apt-get install -y make
 
+    - name: Update Makefile
+      run: |
+        sed -i 's/docker exec -ti/docker exec -i/' Makefile
+
     - name: Build and start Docker stack
       run: |
         make create
 
-    - name: Wait for services to be ready
+    - name: Run ignite script
       run: |
-        echo "Waiting for CKAN to be ready..."
-        timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:5000)" != "200" ]]; do sleep 5; done' || false
+        make ignite
 
     - name: Test CKAN
       run: |
