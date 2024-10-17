@@ -69,7 +69,7 @@ make_api_call() {
 # Function to create organization with retry
 create_organization() {
     echo "Creating organization..."
-    org_data="{\"name\":\"$ORG_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
+    org_data="{\"name\":\"$ORG_BASE_ID\",\"title\":\"$ORG_NAME\",\"description\":\"$ORG_DESCRIPTION\"}"
     response=$(make_api_call "organization_create" "POST" "$org_data")
     echo "$response"
     if echo "$response" | grep -q '"success": true'; then
