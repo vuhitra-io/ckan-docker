@@ -1,7 +1,9 @@
-Check README [here](https://github.com/ckan/ckan-docker/blob/master/README.md)
+# My personal stack for quick work
 
-Additional ckan_ini parameters in __ckan_ini_configs__.txt
+Check original readme [here](https://github.com/ckan/ckan-docker/blob/master/README.md)
 
-Additional commands in __commands__.txt
+- Additional ckan_ini parameters in __ckan_ini_configs__.txt
+- Additional commands in __commands__.txt
+- plugins in __project_env__
 
-plugins in __project_env__
+## How to use:
