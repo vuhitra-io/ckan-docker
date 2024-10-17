@@ -21,10 +21,26 @@ run_in_container() {
     docker exec -i ckan-dev bash -c "$1"
 }
 
-# Create the API token
-echo "Creating API token..."
-TOKEN_VALUE=$(run_in_container "ckan -c \$CKAN_INI user token add '$USER_NAME' '$TOKEN_NAME' | tail -n 1 | tr -d '[:space:]'")
-echo "Token created: $TOKEN_VALUE"
+# Function to check if token exists
+check_token_exists() {
+    local token_check=$(run_in_container "ckan -c \$CKAN_INI user token list '$USER_NAME' | grep '$TOKEN_NAME'")
+    if [ -n "$token_check" ]; then
+        echo "Token '$TOKEN_NAME' already exists for user '$USER_NAME'"
+        TOKEN_VALUE=$(echo "$token_check" | awk '{print $NF}')
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Check if token exists, if not, create it
+if check_token_exists; then
+    echo "Using existing token: $TOKEN_VALUE"
+else
+    echo "Creating API token..."
+    TOKEN_VALUE=$(run_in_container "ckan -c \$CKAN_INI user token add '$USER_NAME' '$TOKEN_NAME' | tail -n 1 | tr -d '[:space:]'")
+    echo "Token created: $TOKEN_VALUE"
+fi
 
 # Function to make API calls
 make_api_call() {
@@ -35,6 +51,19 @@ make_api_call() {
         -H 'Authorization: $TOKEN_VALUE' \
         -H 'Content-Type: application/json' \
         -d '$data'"
+}
+
+
+# Function to check if organization exists
+check_organization_exists() {
+    local org_check=$(make_api_call "organization_list" "POST" "{\"all_fields\": true}")
+    if echo "$org_check" | jq -e ".result[] | select(.title == \"$ORG_NAME\")" > /dev/null; then
+        echo "Organization '$ORG_NAME' already exists"
+        ORG_ID=$(echo "$org_check" | jq -r ".result[] | select(.title == \"$ORG_NAME\") | .id")
+        return 0
+    else
+        return 1
+    fi
 }
 
 # Create the organization
