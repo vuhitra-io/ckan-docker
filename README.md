@@ -1,3 +1,5 @@
+[![CKAN Docker Stack Test](https://github.com/vht-io/ckan-docker/actions/workflows/test.yml/badge.svg)](https://github.com/vht-io/ckan-docker/actions/workflows/test.yml)
+
 # My personal stack for quick work
 
 Check original readme [here](https://github.com/ckan/ckan-docker/blob/master/README.md)
