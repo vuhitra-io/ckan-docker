@@ -10,6 +10,7 @@ USER_EMAIL="admin@vuhitra.io"
 TOKEN_NAME="default-token"
 TOKEN_VALUE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyeC1lUHhvXzNrdVgxQlE4Nzlsb3lWOTRYSTZhT2o1OGVKSHBNQnppN0dzIiwiaWF0IjoxNzI5MTUyNzQzfQ.SNQ-E2YHZvUMEpt1LkNbRJfLI8L0WRn7q4XEGeGu1OU"
 
+
 # Generate a random suffix (6 alphanumeric characters)
 RANDOM_SUFFIX=$(LC_ALL=C tr -dc 'a-z0-9' < /dev/urandom | head -c 6)
 

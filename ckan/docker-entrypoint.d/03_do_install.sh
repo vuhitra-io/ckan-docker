@@ -68,7 +68,8 @@ main() {
     done
 
     # init database
-    ckan --config $CKAN_INI db init
+    # ckan --config $CKAN_INI db init
+    # prerun already does this
 }
 
 # Run the main function

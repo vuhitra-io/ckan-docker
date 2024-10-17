@@ -47,7 +47,12 @@ main() {
     fi
 
     # Set ownership for CKAN i18n directory
-    chown -R ckan:ckan /srv/app/src/ckan/ckan/public/base/i18n
+    chown -R ckan:ckan /srv/app/src/ckan
+
+    # Ensure CKAN configuration uses the correct storage path
+    RUN mkdir -p /root/ckan/storage && chown -R ckan:ckan /root/ckan/storage
+    ckan config-tool "$CKAN_INI" "ckan.storage_path = /root/ckan/storage"
+    ckan config-tool "$CKAN_INI" "ckan.max_resource_size = 1000"
 
     # Apply configurations from file
     apply_configs_from_file "$INI_CONFIG_LINES"
