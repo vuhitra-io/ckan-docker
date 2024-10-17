@@ -34,7 +34,7 @@ demo:
 	fi
 
 pre-start: sync ignite
-purge: destroy build up ignite auto-sync
+purge: destroy build up ignite auto-sync demo
 reset: destroy up ignite auto-sync
 all: down build up ignite auto-sync
 rebuild: build up
