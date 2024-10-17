@@ -46,6 +46,9 @@ main() {
         exit 1
     fi
 
+    # Set ownership for CKAN i18n directory
+    chown -R ckan:ckan /srv/app/src/ckan/ckan/public/base/i18n
+
     # Apply configurations from file
     apply_configs_from_file "$INI_CONFIG_LINES"
     echo "CKAN configuration update complete."

@@ -14,6 +14,13 @@ down:
 destroy:
 	docker compose -f docker-compose.dev.yml down -v
 
+sync:
+	docker exec -ti ckan-dev /root/do_sync.sh
+
+ignite:
+	docker exec -ti ckan-dev /root/do_ignite.sh
+
+pre-start: sync ignite
 all: destroy build up
 rebuild: build up
 restart: down up

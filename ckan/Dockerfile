@@ -6,7 +6,11 @@ RUN npm install -g webpack webpack-cli
 
 # Copy your inotify script into the container
 COPY ./sh/watch_sync.sh /root/watch_sync.sh
+COPY ./sh/do_sync.sh /root/do_sync.sh
+COPY ./sh/do_ignite.sh /root/do_ignite.sh
 RUN chmod +x /root/watch_sync.sh
+RUN chmod +x /root/do_sync.sh
+RUN chmod +x /root/do_ignite.sh
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
