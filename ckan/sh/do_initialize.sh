@@ -4,7 +4,9 @@
 ORG_NAME="Vuhitra"
 ORG_BASE_ID="vuhitra-io"
 ORG_DESCRIPTION="Home Dev"
-USER_NAME="ckan_admin"
+USER_NAME="admin"
+USER_PASSWORD="Test.1234"
+USER_EMAIL="admin@vuhitra.io"
 TOKEN_NAME="default-token"
 TOKEN_VALUE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyeC1lUHhvXzNrdVgxQlE4Nzlsb3lWOTRYSTZhT2o1OGVKSHBNQnppN0dzIiwiaWF0IjoxNzI5MTUyNzQzfQ.SNQ-E2YHZvUMEpt1LkNbRJfLI8L0WRn7q4XEGeGu1OU"
 
@@ -20,6 +22,18 @@ echo "Generated Organization ID: $ORG_ID"
 run_in_container() {
     docker exec -i ckan-dev bash -c "$1"
 }
+
+# Create admin user
+echo "Creating admin user..."
+user_create=$(run_in_container "ckan user add $USER_NAME email=$USER_EMAIL password=$USER_PASSWORD")
+if echo "$user_create" | grep -q "User $USER_NAME created"; then
+    echo "Admin user created successfully."
+    run_in_container "ckan sysadmin add $USER_NAME"
+    echo "Admin user granted sysadmin rights."
+else
+    echo "Note: Admin user might already exist. Proceeding with the script."
+fi
+
 
 # Function to check if token exists
 check_token_exists() {
