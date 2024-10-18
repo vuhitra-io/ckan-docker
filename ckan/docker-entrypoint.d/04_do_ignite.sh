@@ -3,11 +3,11 @@
 # Check if the file exists
 if [ ! -f "$COMMAND_FILE" ]; then
     echo "Error: File '$COMMAND_FILE' not found."
-    exit 1
+    touch $COMMAND_FILE
 fi
 
 # Copy the mounted file to a new location
-cp /root/commands.txt /root/commands
+cp $COMMAND_FILE /root/commands
 
 # Set correct ownership and permissions for the new file
 chown root:root /root/commands
