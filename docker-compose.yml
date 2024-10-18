@@ -33,8 +33,8 @@ services:
       - solrnet
       - redisnet
     env_file:
-      - .env
-      - __project_env__
+      - vht_core_envs/.env-global
+      - vht_core_envs/.env-project
     links:
       - db
       - solr
@@ -47,9 +47,6 @@ services:
       - ./src:/srv/app/src_extensions
       - pip_cache:/root/.cache/pip
       - site_packages:/usr/lib/python3.10/site-packages
-      - ./__requirements__.txt:/root/requirements.txt
-      - ./__commands__.txt:/root/commands.txt
-      - ./__ckan_ini_configs__.txt:/root/ckan-ini-adds.txt
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://0.0.0.0:5000"]
