@@ -26,7 +26,7 @@ services:
       args:
         - TZ=${TZ}
     env_file:
-      - vht_core_envs/ckan.env
+      - vht_core_envs/.ckan.env
       - vht_core_envs/.proj.env
     links:
       - db
