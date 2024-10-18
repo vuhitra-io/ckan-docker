@@ -50,7 +50,7 @@ main() {
     chown -R ckan:ckan /srv/app/src/ckan
 
     # Ensure CKAN configuration uses the correct storage path
-    RUN mkdir -p /root/ckan/storage && chown -R ckan:ckan /root/ckan/storage
+    mkdir -p /root/ckan/storage && chown -R ckan:ckan /root/ckan/storage
     ckan config-tool "$CKAN_INI" "ckan.storage_path = /root/ckan/storage"
     ckan config-tool "$CKAN_INI" "ckan.max_resource_size = 1000"
 
