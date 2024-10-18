@@ -26,8 +26,8 @@ services:
       args:
         - TZ=${TZ}
     env_file:
-      - vht_core_envs/.env-global
-      - vht_core_envs/.env-project
+      - vht_core_envs/ckan.env
+      - vht_core_envs/.proj.env
     links:
       - db
       - solr

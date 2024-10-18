@@ -33,8 +33,8 @@ services:
       - solrnet
       - redisnet
     env_file:
-      - vht_core_envs/.env-global
-      - vht_core_envs/.env-project
+      - .env
+      - vht_core_envs/.proj.env
     links:
       - db
       - solr
